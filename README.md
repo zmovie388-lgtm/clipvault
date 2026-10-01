@@ -4,6 +4,8 @@ Smart, high-quality media downloader. Paste a link, pick a quality, save the fil
 
 **Live demo:** https://clipvault-beta.vercel.app
 
+![ClipVault](docs/promo.png)
+
 ## Features
 - TikTok downloads **without watermark**
 - YouTube & Facebook (Watch, Reels, fb.watch) — also Instagram and X
