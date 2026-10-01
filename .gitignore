@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.vercel
+selfhost/server/downloads/
+selfhost/server/cookies.txt
+cookies.txt
+.env
