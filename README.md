@@ -4,6 +4,8 @@ Smart, high-quality media downloader. Paste a link, pick a quality, save the fil
 
 **Live demo:** https://clipvault-beta.vercel.app
 
+**Android app:** [Download ClipVault.apk](https://github.com/zmovie388-lgtm/clipvault-android/releases/latest/download/ClipVault.apk) · [source](https://github.com/zmovie388-lgtm/clipvault-android)
+
 ![ClipVault](docs/promo.png)
 
 ## Features

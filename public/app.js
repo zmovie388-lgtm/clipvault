@@ -22,6 +22,7 @@ const fmtDur = (s) => {
 const toHMS = (s) => { s = Math.round(s); return [Math.floor(s / 3600), Math.floor((s % 3600) / 60), s % 60].map((n) => String(n).padStart(2, '0')).join(':'); };
 const fmtBytes = (b) => { if (!b) return ''; const u = ['B', 'KB', 'MB', 'GB']; let i = 0; while (b >= 1024 && i < 3) { b /= 1024; i++; } return b.toFixed(i ? 1 : 0) + ' ' + u[i]; };
 const fmtNum = (n) => (n == null ? '' : n >= 1e6 ? (n / 1e6).toFixed(1) + 'M' : n >= 1e3 ? (n / 1e3).toFixed(1) + 'K' : String(n));
+const extractUrl = (t) => { const m = String(t || '').match(/https?:\/\/[^\s"'<>]+/); return m ? m[0] : String(t || '').trim(); };
 const showError = (msg) => { const e = $('#errorBox'); e.textContent = msg; e.hidden = !msg; };
 
 async function api(path, body) {
@@ -51,15 +52,17 @@ function syncPlatform() {
 }
 input.addEventListener('input', syncPlatform);
 $('#pasteBtn').addEventListener('click', async () => {
-  try { input.value = (await navigator.clipboard.readText()).trim(); syncPlatform(); input.focus(); }
+  try { input.value = extractUrl(await navigator.clipboard.readText()); if (platformOf(input.value)) { syncPlatform(); $('#grabForm').requestSubmit(); return; } syncPlatform(); input.focus(); }
   catch { input.focus(); showError('Clipboard access was blocked — long-press the box and choose Paste.'); }
 });
 
 /* ---------- fetch info ---------- */
 $('#grabForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const url = input.value.trim();
+  const url = extractUrl(input.value);
   if (!url) return;
+  if (!/^https?:\/\//.test(url)) { showError('Paste a full video link that starts with https://'); return; }
+  input.value = url;
   showError('');
   resetJob();
   const go = $('#goBtn');
